@@ -1,10 +1,12 @@
 import logo from './logo.svg';
 import './App.css';
 import React from 'react';
+import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import UserInput from './UserInput/UserInput';
 import UserOutput from './UserOutput/UserOutput';
 import reactDom from 'react-dom';
 import Person from './Person/Person';
+import styled from 'styled-components';
 
 function App() {
 
@@ -15,10 +17,16 @@ function App() {
     {id: 4, name: 'd', age: '4'},
   ]
 
-  const indexUser = () => {
-    const a = 2;
-    return a;
-  }
+  const indexUser = (
+    persons.map((person, index) => {
+    return <Person 
+      click={() => {deleteUser(index)}}
+      key={person.id}
+      name={person.name} 
+      age={person.age}>
+    </Person>
+    })
+  )
 
   const createUser = () => {
 
@@ -34,16 +42,19 @@ function App() {
 
     return (
       <div className="App">
-        {persons.map((person, index) => {
-          return <Person 
-          click={() => {deleteUser(index)}}
-          key={person.id}
-          name={person.name} 
-          age={person.age}>
-          </Person>
-        })}
+        {indexUser}
       </div>
     );
+
+  /*return (
+      <main>
+          <Switch>
+              <Route path="/" component={Home} />
+              <Route path="/about" component={About} />
+              <Route path="/shop" component={Shop} />
+          </Switch>
+      </main>
+  )*/
 }
 
 export default App;
